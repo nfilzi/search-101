@@ -1,10 +1,41 @@
 <div class="container mt-5">
+  <%= form_tag movies_path, method: :get, class: "form-inline" do %>
+    <%= text_field_tag :query,
+      params[:query],
+      class: "form-control",
+      placeholder: "Find a movie"
+    %>
+    <%= submit_tag "Search", class: "btn btn-primary" %>
+  <% end %>
+
+  <h4>Movies only</h4>
   <div class="row">
     <div class="col-sm-8 offset-sm-2">
       <div id="movies">
         <% @movies.each do |movie| %>
+        <header class="d-flex justify-content-between align-items-baseline">
           <h4><%= movie.title %></h4>
+          <span><%= movie.director.first_name %> <%= movie.director.last_name %></span>
+        </header>
           <p><%= movie.synopsis %></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <h4>Global results</h4>
+
+  <div class="row">
+    <div class="col-sm-8 offset-sm-2">
+      <div id="movies">
+        <% @results.each do |result| %>
+        <header class="d-flex justify-content-between align-items-baseline">
+          <h4><%= result.searchable.title %></h4>
+          <span class="category"><%= result.searchable_type %></span>
+          <!-- <span><%# movie.director.first_name %> <%# movie.director.last_name %></span> -->
+        </header>
+          <p><%= result.searchable.synopsis %></p>
         <% end %>
       </div>
     </div>
